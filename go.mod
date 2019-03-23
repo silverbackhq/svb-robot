@@ -7,6 +7,7 @@ require (
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/google/logger v1.0.1
 	github.com/mattn/go-isatty v0.0.7 // indirect
+	github.com/nbio/st v0.0.0-20140626010706-e9e8d9816f32
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/viper v1.3.2
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect

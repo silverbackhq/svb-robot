@@ -24,13 +24,24 @@ func main() {
 	var exec string
 	var configFile string
 
+	dir, err := os.Getwd()
+
+	if err != nil {
+		panic(fmt.Sprintf(
+			"Error while loading working directory: %s",
+			err.Error(),
+		))
+	}
+
+	os.Setenv("BasePath", dir)
+
 	flag.StringVar(&exec, "exec", "", "exec")
 	flag.StringVar(&configFile, "config", "config.prod.yml", "config")
 	flag.Parse()
 
 	viper.SetConfigFile(configFile)
 
-	err := viper.ReadInConfig()
+	err = viper.ReadInConfig()
 
 	if err != nil {
 		panic(fmt.Sprintf(
