@@ -54,7 +54,7 @@ func Listen(c *gin.Context) {
 			actions.ExecuteIssuesActions(issues)
 
 			// Commands Listeners
-			commands.RegisterIssuesAction("test", plugin.IssuesTestCommandListener)
+			commands.RegisterIssuesAction("help", plugin.IssuesHelpCommandListener)
 			commands.ExecuteIssuesActions(issues)
 		case "push":
 			var push event.Push
@@ -68,7 +68,7 @@ func Listen(c *gin.Context) {
 			actions.ExecuteIssueCommentActions(issueComment)
 
 			// Commands Listeners
-			commands.RegisterIssueCommentAction("test", plugin.IssueCommentTestCommandListener)
+			commands.RegisterIssueCommentAction("help", plugin.IssueCommentHelpCommandListener)
 			commands.ExecuteIssueCommentActions(issueComment)
 		case "create":
 			var create event.Create

@@ -18,8 +18,8 @@ func Auth(c *gin.Context) {
 		ClientID:     viper.GetString("github.client_id"),
 		RedirectURI:  viper.GetString("github.redirect_uri"),
 		AllowSignup:  viper.GetString("github.allow_signup"),
-		Scope:        viper.GetString("github.scope"),
-		ClientSecret: viper.GetString("github.secret"),
+		Scopes:       viper.GetStringSlice("github.scopes"),
+		ClientSecret: viper.GetString("github.client_secret"),
 	}
 
 	state, err := c.Cookie("gh_oauth_state")

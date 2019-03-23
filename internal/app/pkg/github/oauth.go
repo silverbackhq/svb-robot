@@ -82,7 +82,9 @@ func (e *OAuthApp) AddScopes(scopes []string) {
 
 // BuildAuthorizeURL get the authorize url
 func (e *OAuthApp) BuildAuthorizeURL() string {
-	e.Scope = strings.Join(e.Scopes, ",")
+	if e.Scope == "" {
+		e.Scope = strings.Join(e.Scopes, ",")
+	}
 
 	u, err := url.Parse(GithubOAuthURL)
 

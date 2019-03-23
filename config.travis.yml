@@ -19,7 +19,8 @@ redis:
 github:
     webhook_secret: value
     client_id: value
-    redirect_uri: value
-    allow_signup: "false"
-    scope: value
     client_secret: value
+    redirect_uri: http://app_url/auth
+    allow_signup: false
+    scopes:
+        - repo

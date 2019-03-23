@@ -5,8 +5,11 @@
 package plugin
 
 import (
+	"fmt"
 	"github.com/silverbackhq/svb-robot/internal/app/event"
+	"github.com/silverbackhq/svb-robot/internal/app/pkg/github"
 	"github.com/silverbackhq/svb-robot/internal/app/pkg/logger"
+	"strings"
 )
 
 // RawListener Action
@@ -29,6 +32,33 @@ func WatchListener(watch event.Watch) (bool, error) {
 
 // IssuesListener Action
 func IssuesListener(issues event.Issues) (bool, error) {
+
+	if issues.Issue.State == "open" {
+		repoPath := strings.Split(issues.Repository.FullName, "/")
+		user := repoPath[0]
+		repo := repoPath[1]
+		issueNumber := issues.Issue.Number
+		issueURL := fmt.Sprintf("%s#issue-%d", issues.Issue.HTMLURL, issues.Issue.ID)
+		owner := fmt.Sprintf("@%s", issues.Issue.User.Login)
+		body := issues.Issue.Body
+		steps := fmt.Sprintf("\n\n%s\n\n", strings.Join([]string{"- Step 1.", "- Step 2."}, "\n"))
+
+		comment := fmt.Sprintf(`Hello %s, can you please do the following:%s<details><summary>Details</summary>In response to <a href="%s">this</a>:<br/><br/><blockquote>%s</blockquote>Instructions for interacting with me using issues and comments are available <a href="https://github.com/silverbackhq/svb-robot">here</a>. If you have questions or suggestions related to my behavior, <a href="https://github.com/silverbackhq/svb-robot/issues">please create an issue against me here</a></details>`, owner, steps, issueURL, body)
+
+		githubAPI := &github.API{
+			Token:      "1f4760d4828b424a2002a34448e25d9d101663ee",
+			Author:     user,
+			Repository: repo,
+		}
+
+		_, err := githubAPI.NewComment(comment, issueNumber)
+
+		if err != nil {
+			logger.Infof("Error while creating a comment: %s", err.Error())
+			return false, err
+		}
+	}
+
 	logger.Infof("Issues event listener fired [%v]!", issues)
 	return true, nil
 }
@@ -243,14 +273,14 @@ func TeamAddListener(teamAdd event.TeamAdd) (bool, error) {
 	return true, nil
 }
 
-// IssuesTestCommandListener Command
-func IssuesTestCommandListener(command event.Command, issues event.Issues) (bool, error) {
-	logger.Infof("IssuesTestCommandListener event listener fired [%v] [%v]!", command, issues)
+// IssuesHelpCommandListener Command
+func IssuesHelpCommandListener(command event.Command, issues event.Issues) (bool, error) {
+	logger.Infof("IssuesHelpCommandListener event listener fired [%v] [%v]!", command, issues)
 	return true, nil
 }
 
-// IssueCommentTestCommandListener Command
-func IssueCommentTestCommandListener(command event.Command, issueComment event.IssueComment) (bool, error) {
-	logger.Infof("IssueCommentTestCommandListener event listener fired! [%v] [%v]!", command, issueComment)
+// IssueCommentHelpCommandListener Command
+func IssueCommentHelpCommandListener(command event.Command, issueComment event.IssueComment) (bool, error) {
+	logger.Infof("IssueCommentHelpCommandListener event listener fired! [%v] [%v]!", command, issueComment)
 	return true, nil
 }
