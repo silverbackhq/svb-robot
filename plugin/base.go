@@ -46,7 +46,7 @@ func IssuesListener(issues event.Issues) (bool, error) {
 		comment := fmt.Sprintf(`Hello %s, can you please do the following:%s<details><summary>Details</summary>In response to <a href="%s">this</a>:<br/><br/><blockquote>%s</blockquote>Instructions for interacting with me using issues and comments are available <a href="https://github.com/silverbackhq/svb-robot">here</a>. If you have questions or suggestions related to my behavior, <a href="https://github.com/silverbackhq/svb-robot/issues">please create an issue against me here</a></details>`, owner, steps, issueURL, body)
 
 		githubAPI := &github.API{
-			Token:      "1f4760d4828b424a2002a34448e25d9d101663ee",
+			Token:      "~~",
 			Author:     user,
 			Repository: repo,
 		}
