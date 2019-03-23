@@ -1,0 +1,25 @@
+app:
+    mode: dev
+    port: 8080
+    domain: example.com
+    tls:
+        status: off
+        pemPath: cert/server.pem
+        keyPath: cert/server.key
+
+log:
+    level: info
+    path: var/logs
+
+redis:
+    addr: localhost:6379
+    password:
+    db: 0
+
+github:
+    webhook_secret: value
+    client_id: value
+    redirect_uri: value
+    allow_signup: "false"
+    scope: value
+    client_secret: value
